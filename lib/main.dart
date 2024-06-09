@@ -1,7 +1,11 @@
-import 'package:crud_firebase/services/firebase_service.dart';
+import 'package:crud_firebase/screens/edit_data.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
+//screens
+import 'screens/agg_data.dart';
+import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,45 +20,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'MaterialApp',
-      home: Home(),
-    );
-  }
-}
 
-class Home extends StatefulWidget {
-  const Home({
-    super.key,
-  });
+      //rutas
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Home(),
+        '/aggData': (context) => const AggData(),
+        '/editData': (context) => const EditData(),
 
-  @override
-  State<Home> createState() => _HomeState();
-}
+      },
+      //rutas
 
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Material App Bar'),
-      ),
-      body: FutureBuilder(
-          future: getData(),
-          builder: ((context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return Text(snapshot.data?[index]['prueba']);
-                },
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          })),
     );
   }
 }
